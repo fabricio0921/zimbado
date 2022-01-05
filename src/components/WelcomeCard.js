@@ -2,7 +2,7 @@ import React from 'react'
 import { StyleSheet, Text, View, Image } from 'react-native'
 import { Fonts, Colors, Images } from '../contants'
 import { Display } from '../utils'
-Fonts
+
 
 
 const WelcomeCard = ({ title, content, image }) => {

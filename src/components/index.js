@@ -1,3 +1,6 @@
+import Separator from "./Separator";
 import WelcomeCard from "./WelcomeCard";
 
-export {WelcomeCard};
+
+
+export {Separator, WelcomeCard};
