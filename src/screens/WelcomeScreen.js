@@ -14,34 +14,31 @@ import { Display } from '../utils'
 const pageStyle = isActive =>
     isActive
         ? styles.page
-        : { ...styles.page, backgroundColor: Colors.DEFAULT_GREY }
+        : { ...styles.page, backgroundColor: Colors.DEFAULT_GREY };
 
 
 const Pagination = ({ index }) => {
     return (
         <View style={styles.pageContainer}>
-            {[...Array(General.WELCOME_CONTENTS.length).keys()].map((_, i) => 
-            i === index ? (
-                <View style={pageStyle(true)} key={i} />
-            ) : (
-                <View style={pageStyle(false)} key={i} />
-            ),
+            {[...Array(General.WELCOME_CONTENTS.length).keys()].map((_, i) =>
+                i === index ? (
+                    <View style={pageStyle(true)} key={i} />
+                ) : (
+                    <View style={pageStyle(false)} key={i} />
+                ),
             )}
-
-
-
-
         </View>
-    )
+    );
 }
 
 
-const WelcomeScreen = () => {
+
+const WelcomeScreen = ({ navigation }) => {
     const [welcomeListIndex, setWelcomeListIndex] = useState(0);
     const welcomeList = useRef();
-    const onViewRef = (({ changed }) => {
+    const onViewRef = useRef(({ changed }) => {
         setWelcomeListIndex(changed[0].index);
-    })
+    });
     const viewConfigRef = useRef({ viewAreaCoveragePercentThreshold: 50 });
 
     const pageScroll = () => {
@@ -80,16 +77,27 @@ const WelcomeScreen = () => {
             <Pagination index={welcomeListIndex} />
             <Separator height={Display.setHeight(8)} />
 
-
-            <View style={styles.buttonContainer}>
-                <TouchableOpacity activeOpacity={0.8} style={{ marginLeft: 10 }} onPress={() => welcomeList.current.scrollToEnd()}>
-                    <Text style={styles.buttonText}> PULA</Text>
-                </TouchableOpacity >
-                <TouchableOpacity style={styles.button} activeOpacity={0.8} onPress={() => pageScroll()}>
-                    <Text style={styles.buttonText}> PRÓX</Text>
+            {welcomeListIndex === 2 ? (
+                <TouchableOpacity
+                    style={styles.gettingStartedButton}
+                    activeOpacity={0.8}
+                    onPress={()=>navigation.navigate('Signin')}
+                >
+                    <Text style={styles.gettingStartedButtonText}>Começar</Text>
                 </TouchableOpacity>
-            </View>
+
+            ) : (
+                <View style={styles.buttonContainer}>
+                    <TouchableOpacity activeOpacity={0.8} style={{ marginLeft: 10 }} onPress={() => welcomeList.current.scrollToEnd()}>
+                        <Text style={styles.buttonText}> PULA</Text>
+                    </TouchableOpacity >
+                    <TouchableOpacity style={styles.button} activeOpacity={0.8} onPress={() => pageScroll()}>
+                        <Text style={styles.buttonText1}> PRÓXIMO</Text>
+                    </TouchableOpacity>
+                </View>
+            )}
         </View>
+
     )
 }
 
@@ -126,11 +134,32 @@ const styles = StyleSheet.create({
         fontFamily: Fonts.POPPINS_EXTRA_BOLD,
         lineHeight: 14 * 1.8
     },
+    buttonText1: {
+        fontSize: 9,
+        fontFamily: Fonts.POPPINS_EXTRA_BOLD,
+        lineHeight: 14 * 1.8
+
+    },
     button: {
         backgroundColor: Colors.LIGHT_GREEN,
         paddingVertical: 20,
         paddingHorizontal: 11,
         borderRadius: 32
+    },
+    gettingStartedButton: {
+        backgroundColor: Colors.DEFAULT_GREEN,
+        paddingVertical: 5,
+        paddingHorizontal: 40,
+        borderRadius: 8,
+        justifyContent: 'center',
+        alignItems: 'center',
+        elevation: 2,
+    },
+    gettingStartedButtonText: {
+        fontSize: 20,
+        color: Colors.DEFAULT_WHITE,
+        lineHeight: 20 * 1.4,
+        fontFamily: Fonts.POPPINS_MEDIUM,
     }
 })
 
