@@ -1,6 +1,6 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { View, Text, StyleSheet, StatusBar, TextInput, Image } from 'react-native'
-import { Separator } from '../components'
+import { Separator, ToggleButton } from '../components'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import Feather from "react-native-vector-icons/Feather"
 import { TouchableOpacity } from 'react-native-gesture-handler'
@@ -10,6 +10,7 @@ import { Display } from '../utils'
 
 
 const SigninScreen = ({ navigation }) => {
+    const [isPasswordShow, setPasswordShow] = useState(false)
     return (
         <View style={styles.container}>
             <StatusBar barStyle='dark-content'
@@ -39,20 +40,27 @@ const SigninScreen = ({ navigation }) => {
                 <View style={styles.inputSubContainer}>
                     <Feather name='lock' size={22} color={Colors.DEFAULT_GREY} style={{ marginRight: 10 }} />
                     <TextInput
-                        secureTextEntry={true}
+                        secureTextEntry={isPasswordShow ? false : true}
                         placeholder='Senha'
                         placeholderTextColor={Colors.DEFAULT_GREY}
                         selectionColor={Colors.DEFAULT_GREY}
                         style={styles.inputText}
                     />
-                    <Feather name='eye' size={22} color={Colors.DEFAULT_GREY} style={{ marginRight: 10 }} />
+                    <Feather
+                        name={isPasswordShow ? 'eye' : 'eye-off'}
+                        size={22}
+                        color={Colors.DEFAULT_GREY}
+                        style={{ marginRight: 10 }}
+                        onPress={() => setPasswordShow(!isPasswordShow)}
+                    />
                 </View>
             </View>
             <Text></Text>
             <View style={styles.forgotPasswordContainer}>
-                <View>
+                <View style={styles.toggleContainer}>
+                    <ToggleButton size={0.5}/>
                     <Text style={styles.remeberMeText}>
-                        Lembre-me
+                        Lembrar Senha
                     </Text>
                 </View>
                 <Text style={styles.forgotPasswordText}>Esqueceu a Senha</Text>
@@ -235,20 +243,25 @@ const styles = StyleSheet.create({
         backgroundColor: Colors.DEFAULT_WHITE,
         padding: 2,
         borderRadius: 3,
-        position:'absolute',
-        left:25
+        position: 'absolute',
+        left: 25
     },
-    socialButtonContanier:{
-        flexDirection:'row',
-        alignItems:'center',
-        justifyContent:'center',
-        width:'100%'
+    socialButtonContanier: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: '100%'
     },
-    socialSigninButtonText:{
+    socialSigninButtonText: {
         fontSize: 13,
         lineHeight: 13 * 1.4,
         color: Colors.DEFAULT_WHITE,
         fontFamily: Fonts.POPPINS_MEDIUM
+    },
+    toggleContainer: {
+        flexDirection: 'row',
+        alignItems:'center'
+
     }
 })
 
