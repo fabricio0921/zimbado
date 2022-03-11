@@ -63,14 +63,24 @@ const SigninScreen = ({ navigation }) => {
                         Lembrar Senha
                     </Text>
                 </View>
-                <Text style={styles.forgotPasswordText}>Esqueceu a Senha</Text>
+                <Text 
+                style={styles.forgotPasswordText}
+                onPress={()=>navigation.navigate('ForgotPassword')}
+                >
+                    Esqueceu a Senha
+                </Text>
             </View>
             <TouchableOpacity style={styles.loginButton}>
                 <Text style={styles.loginButtonText}>Login</Text>
-            </TouchableOpacity >
+            </TouchableOpacity  >
             <View style={styles.logoutContainer}>
                 <Text style={styles.accountText}>Não possui uma conta?</Text>
-                <Text style={styles.signupText}>Cadastrar</Text>
+                <Text 
+                style={styles.signupText}
+                onPress={()=>navigation.navigate('Signup')}
+                >
+                    Cadastrar
+                </Text>
             </View>
             <Text style={styles.orText}>OU</Text>
             <TouchableOpacity style={styles.facebookButton} >
